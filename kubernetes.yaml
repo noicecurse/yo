@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yo
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: yo
+  template:
+    metadata:
+      labels:
+        app: yo
+    spec:
+      containers:
+      - name: yo
+        image: noicecurse.jfrog.io/default-docker-local/noicecurse/yo:1
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: jfrog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yo
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: yo
